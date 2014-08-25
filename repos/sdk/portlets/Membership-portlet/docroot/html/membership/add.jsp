@@ -13,6 +13,9 @@
 .table-last-header {
 	width: 15%;
 }
+.table {
+}
+
 </style>
 <aui:script>
 AUI().use(
@@ -22,10 +25,10 @@ AUI().use(
     node.on(
       'click',
       function() {
-     var idArray = [];
-      A.all('input[type=checkbox]:checked').each(function(object) {
-      idArray.push(object.get("value"));
-    alert(idArray.length);
+     	var idArray = [];
+      	A.all('input[name=<portlet:namespace />rowIds]:checked').each(function(object) {
+      	idArray.push(object.get("value"));
+    	alert(idArray.length);
         });
        if(idArray==""){
 			  alert("Please select records!");
@@ -102,28 +105,32 @@ AUI().use(
 </head>
 
 <body>
+	<div class="row-fluid">
 	<div id="membershipAddDelete" class="span12">
-		<a href="#" id="add">Add</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="delete">Delete</a>
-
+		<div class="pull-right">
+		<button id="add" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
+		<button id="delete" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button> 
+		</div>
 	</div>
-	<div  id="addMembershipForm">
+	</div>
+	<div id="addMembershipForm"  class="form-horizontal">
 	<aui:form name="myForm" action="<%=saveMemberships.toString()%>" >
 		<aui:input name="membershipId" type="hidden" id="membershipId" />
-			<div class="span12">
-			<div class="span2">
-				<label>Membership Name</label>
-		</div>
-		<div class="span3">		
-		 <input name="<portlet:namespace/>membership_name" type="text" required = "required">
+		<div class="control-group">
+			<label class="control-label">Membership Name</label>
+			<div class="controls">
+				<input name="<portlet:namespace/>membership_name" type="text" required = "required">
 			</div>
 		</div>
-		<aui:button type="submit" value="Submit" />
-		<aui:button  type="reset" value="Cancel" id ="cancel"/>
-		
+		<div class="control-group">
+			<div class="controls">
+				<aui:button type="submit" value="Submit" />
+				<aui:button  type="reset" value="Cancel" id ="cancel"/>
+			</div>
+		</div>
 	</aui:form>
 	</div>
-	
-	 <div><label style="color: white" >.</label></div>
+
 	
 </body>
 

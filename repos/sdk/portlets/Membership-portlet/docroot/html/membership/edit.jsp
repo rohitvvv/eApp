@@ -103,10 +103,14 @@ AUI().use(
 </head>
 <body>
 <jsp:useBean id="editMembership" type="com.rknowsys.eapp.hrm.model.Membership" scope="request" />
-<div id="editMembershipAddDelete" class="span12">
-		<a href="#" id="add">Add</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"
-			id="delete">Delete</a>
+<div class="row-fluid">
+	<div id="membershipAddDelete" class="span12">
+		<div class="pull-right">
+		<button id="add" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
+		<button id="delete" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button>
+		</div>
 	</div>
+</div>
 	<div id="editMembershipForm">
   <aui:form name="myForm" action="<%=updateMemberships.toString()%>">
   <aui:input name="membershipId" type="hidden" id="membershipId"  value="<%=editMembership.getId()%>"/>
@@ -121,7 +125,6 @@ AUI().use(
 	<aui:button type="submit" value="Submit"/> <aui:button  type="reset" value="Cancel" id ="editCancel"></aui:button>
 	</aui:form>
 	</div>
-	 <div><label style="color: white" >.</label></div>
 </body>
 <%
 PortletURL iteratorURL = renderResponse.createRenderURL();

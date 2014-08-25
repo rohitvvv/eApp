@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -146,8 +147,7 @@ System.out.println("deleting thes skills");
 		String skillId = ParamUtil.getString(actionRequest, "skillId");
 		Skill skills = SkillLocalServiceUtil.getSkill(Long
 				.parseLong(skillId));
-
-		actionRequest.setAttribute("editSkill", skills);
+		actionRequest.getPortletSession(true).setAttribute("editSkill", skills,PortletSession.APPLICATION_SCOPE);
 		actionResponse.setRenderParameter("jspPage",
 				"/html/skill/edit.jsp");
 	}
