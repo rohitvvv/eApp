@@ -1,4 +1,4 @@
-<%@ include file="/html/skill/init.jsp"%>
+<%@ include file="/html/skill/init.jsp"%><!-- this is a test comment -->
 
 <portlet:actionURL var="saveSkills" name="saveSkill">
 </portlet:actionURL>
