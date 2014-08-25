@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -140,8 +141,7 @@ System.out.println("deleting thes membership");
 			SystemException {
 		Long membershipId = ParamUtil.getLong(actionRequest, "membershipId");
 		Membership membership = MembershipLocalServiceUtil.getMembership(membershipId);
-
-		actionRequest.setAttribute("editMembership", membership);
+		actionRequest.getPortletSession(true).setAttribute("editMembership",membership,PortletSession.APPLICATION_SCOPE);
 		actionResponse.setRenderParameter("jspPage",
 				"/html/membership/edit.jsp");
 	}

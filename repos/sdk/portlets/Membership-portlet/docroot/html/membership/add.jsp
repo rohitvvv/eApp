@@ -21,14 +21,13 @@
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#delete');
+    var node = A.one('#deleteMembership');
     node.on(
       'click',
       function() {
      	var idArray = [];
       	A.all('input[name=<portlet:namespace />rowIds]:checked').each(function(object) {
       	idArray.push(object.get("value"));
-    	alert(idArray.length);
         });
        if(idArray==""){
 			  alert("Please select records!");
@@ -69,7 +68,7 @@ AUI().use(
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#add');
+    var node = A.one('#addMembership');
     node.on(
       'click',
       function() {
@@ -89,7 +88,7 @@ AUI().use(
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#cancel');
+    var node = A.one('#cancelMembership');
     node.on(
       'click',
       function() {
@@ -108,8 +107,8 @@ AUI().use(
 	<div class="row-fluid">
 	<div id="membershipAddDelete" class="span12">
 		<div class="pull-right">
-		<button id="add" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
-		<button id="delete" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button> 
+		<button id="addMembership" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
+		<button id="deleteMembership" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button> 
 		</div>
 	</div>
 	</div>
@@ -125,7 +124,7 @@ AUI().use(
 		<div class="control-group">
 			<div class="controls">
 				<aui:button type="submit" value="Submit" />
-				<aui:button  type="reset" value="Cancel" id ="cancel"/>
+				<aui:button  type="reset" value="Cancel" id ="cancelMembership"/>
 			</div>
 		</div>
 	</aui:form>

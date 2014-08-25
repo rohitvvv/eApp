@@ -5,6 +5,7 @@
 <portlet:renderURL var="listview">
 	<portlet:param name="mvcPath" value="/html/skill/add.jsp" />
 </portlet:renderURL>
+<%Skill editSkill=(Skill)request.getSession().getAttribute("editSkill"); %>
 <style type="text/css">	
 .table-first-header{
 width: 10%;
@@ -17,7 +18,7 @@ width: 15%;
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#delete');
+    var node = A.one('#deleteSkill');
     node.on(
       'click',
       function() {
@@ -64,7 +65,7 @@ AUI().use(
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#add');
+    var node = A.one('#addSkill');
     node.on(
       'click',
       function() {
@@ -85,7 +86,7 @@ AUI().ready('event', 'node', function(A){
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#editCancel');
+    var node = A.one('#editCancelSkill');
     node.on(
       'click',
       function() {
@@ -104,11 +105,16 @@ AUI().use(
 
 </head>
 <body>
-<jsp:useBean id="editSkill" type="com.rknowsys.eapp.hrm.model.Skill" scope="request" />
-<div id="editSkillAddDelete" class="span12">
-		<a href="#" id="add">Add</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"
-			id="delete">Delete</a>
+
+	<div class="row-fluid">
+	<div id="skillAddDelete" class="span12">
+		<div class="pull-right">
+		<button id="addSkill" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
+		<button id="deleteSkill" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button> 
+		</div>
 	</div>
+	</div>
+
 	<div id="editSkillForm">
   <aui:form name="myForm" action="<%=updateSkills.toString()%>">
 		<aui:input name="skillId" type="hidden" id="skillId"  value="<%=editSkill.getId()%>"/>
@@ -130,7 +136,7 @@ AUI().use(
 		</div>
 		
 			 
-	<aui:button type="submit" value="Submit"/> <aui:button  type="reset" value="Cancel" id ="editCancel"></aui:button>
+	<aui:button type="submit" value="Submit"/> <aui:button  type="reset" value="Cancel" id ="editCancelSkill"></aui:button>
 	</aui:form>
 	</div>
 	 <div><label style="color: white" >.</label></div>

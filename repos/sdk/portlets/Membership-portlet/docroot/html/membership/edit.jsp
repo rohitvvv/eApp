@@ -5,6 +5,7 @@
 <portlet:renderURL var="listview">
 	<portlet:param name="mvcPath" value="/html/membership/add.jsp" />
 </portlet:renderURL>
+<%Membership editMembership=(Membership)request.getSession().getAttribute("editMembership"); %>
 <style type="text/css">	
 .table-first-header{
 width: 10%;
@@ -17,12 +18,12 @@ width: 15%;
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#delete');
+    var node = A.one('#deleteMembership');
     node.on(
       'click',
       function() {
      var idArray = [];
-      A.all('input[type=checkbox]:checked').each(function(object) {
+      A.all('input[name=<portlet:namespace/>rowIds]:checked').each(function(object) {
       idArray.push(object.get("value"));
     
         });
@@ -64,7 +65,7 @@ AUI().use(
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#add');
+    var node = A.one('#addMembership');
     node.on(
       'click',
       function() {
@@ -85,7 +86,7 @@ AUI().ready('event', 'node', function(A){
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#editCancel');
+    var node = A.one('#editCancelMembership');
     node.on(
       'click',
       function() {
@@ -102,12 +103,11 @@ AUI().use(
 
 </head>
 <body>
-<jsp:useBean id="editMembership" type="com.rknowsys.eapp.hrm.model.Membership" scope="request" />
 <div class="row-fluid">
 	<div id="membershipAddDelete" class="span12">
 		<div class="pull-right">
-		<button id="add" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
-		<button id="delete" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button>
+		<button id="addMembership" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
+		<button id="deleteMembership" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button>
 		</div>
 	</div>
 </div>
@@ -122,7 +122,7 @@ AUI().use(
 		 <input name="<portlet:namespace/>membership_name" type="text" required = "required" value="<%=editMembership.getMembershipName() %>" >
 			</div>
 		</div>
-	<aui:button type="submit" value="Submit"/> <aui:button  type="reset" value="Cancel" id ="editCancel"></aui:button>
+	<aui:button type="submit" value="Submit"/> <aui:button  type="reset" value="Cancel" id ="editCancelMembership"></aui:button>
 	</aui:form>
 	</div>
 </body>

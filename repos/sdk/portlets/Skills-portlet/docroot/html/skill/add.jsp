@@ -18,14 +18,13 @@
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#delete');
+    var node = A.one('#deleteSkill');
     node.on(
       'click',
       function() {
      var idArray = [];
-      A.all('input[type=checkbox]:checked').each(function(object) {
+      A.all('input[name=<portlet:namespace/>rowIds]:checked').each(function(object) {
       idArray.push(object.get("value"));
-    alert(idArray.length);
         });
        if(idArray==""){
 			  alert("Please select records!");
@@ -66,7 +65,7 @@ AUI().use(
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#add');
+    var node = A.one('#addSkill');
     node.on(
       'click',
       function() {
@@ -86,7 +85,7 @@ AUI().use(
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#cancel');
+    var node = A.one('#editCancelSkill');
     node.on(
       'click',
       function() {
@@ -102,11 +101,17 @@ AUI().use(
 </head>
 
 <body>
+		<div class="row-fluid">
 	<div id="skillAddDelete" class="span12">
-		<a href="#" id="add">Add</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="delete">Delete</a>
-
+		<div class="pull-right">
+		<button id="addSkill" class="btn btn-success" type="button"><i class="icon-plus"></i> Add </button>
+		<button id="deleteSkill" class="btn btn-danger" type="button"><i class="icon-trash"></i> Delete </button> 
+		</div>
 	</div>
-	<div  id="addSkillForm">
+	</div>
+	
+	
+		<div  id="addSkillForm">
 	<aui:form name="myForm" action="<%=saveSkills.toString()%>" >
 		<aui:input name="skillId" type="hidden" id="skillId" />
 		<div class="span12">
@@ -127,7 +132,7 @@ AUI().use(
 		</div>
 		
 		<aui:button type="submit" value="Submit" />
-		<aui:button  type="reset" value="Cancel" id ="cancel"/>
+		<aui:button  type="reset" value="Cancel" id ="editCancelSkill"/>
 		
 	</aui:form>
 	</div>
