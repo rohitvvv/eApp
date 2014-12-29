@@ -16,8 +16,6 @@ package com.rknowsys.eapp.hrm.model;
 
 import java.io.Serializable;
 
-import java.sql.Blob;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,24 +31,14 @@ public class EmployeeSoap implements Serializable {
 		EmployeeSoap soapModel = new EmployeeSoap();
 
 		soapModel.setEmployeeId(model.getEmployeeId());
-		soapModel.setContactDetailsId(model.getContactDetailsId());
-		soapModel.setJobId(model.getJobId());
-		soapModel.setShiftId(model.getShiftId());
-		soapModel.setLicenseId(model.getLicenseId());
+		soapModel.setLocationId(model.getLocationId());
+		soapModel.setAssignedUserId(model.getAssignedUserId());
+		soapModel.setImageId(model.getImageId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setFirstName(model.getFirstName());
-		soapModel.setLastName(model.getLastName());
-		soapModel.setMiddleName(model.getMiddleName());
-		soapModel.setPhotograph(model.getPhotograph());
-		soapModel.setGender(model.getGender());
-		soapModel.setMaritalStatus(model.getMaritalStatus());
-		soapModel.setNationality(model.getNationality());
-		soapModel.setDateOfBirth(model.getDateOfBirth());
-		soapModel.setOtherId(model.getOtherId());
 
 		return soapModel;
 	}
@@ -111,36 +99,28 @@ public class EmployeeSoap implements Serializable {
 		_employeeId = employeeId;
 	}
 
-	public long getContactDetailsId() {
-		return _contactDetailsId;
+	public long getLocationId() {
+		return _locationId;
 	}
 
-	public void setContactDetailsId(long contactDetailsId) {
-		_contactDetailsId = contactDetailsId;
+	public void setLocationId(long locationId) {
+		_locationId = locationId;
 	}
 
-	public long getJobId() {
-		return _jobId;
+	public long getAssignedUserId() {
+		return _assignedUserId;
 	}
 
-	public void setJobId(long jobId) {
-		_jobId = jobId;
+	public void setAssignedUserId(long assignedUserId) {
+		_assignedUserId = assignedUserId;
 	}
 
-	public long getShiftId() {
-		return _shiftId;
+	public long getImageId() {
+		return _imageId;
 	}
 
-	public void setShiftId(long shiftId) {
-		_shiftId = shiftId;
-	}
-
-	public long getLicenseId() {
-		return _licenseId;
-	}
-
-	public void setLicenseId(long licenseId) {
-		_licenseId = licenseId;
+	public void setImageId(long imageId) {
+		_imageId = imageId;
 	}
 
 	public long getGroupId() {
@@ -183,95 +163,13 @@ public class EmployeeSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getFirstName() {
-		return _firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		_firstName = firstName;
-	}
-
-	public String getLastName() {
-		return _lastName;
-	}
-
-	public void setLastName(String lastName) {
-		_lastName = lastName;
-	}
-
-	public String getMiddleName() {
-		return _middleName;
-	}
-
-	public void setMiddleName(String middleName) {
-		_middleName = middleName;
-	}
-
-	public Blob getPhotograph() {
-		return _photograph;
-	}
-
-	public void setPhotograph(Blob photograph) {
-		_photograph = photograph;
-	}
-
-	public int getGender() {
-		return _gender;
-	}
-
-	public void setGender(int gender) {
-		_gender = gender;
-	}
-
-	public int getMaritalStatus() {
-		return _maritalStatus;
-	}
-
-	public void setMaritalStatus(int maritalStatus) {
-		_maritalStatus = maritalStatus;
-	}
-
-	public String getNationality() {
-		return _nationality;
-	}
-
-	public void setNationality(String nationality) {
-		_nationality = nationality;
-	}
-
-	public Date getDateOfBirth() {
-		return _dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		_dateOfBirth = dateOfBirth;
-	}
-
-	public String getOtherId() {
-		return _otherId;
-	}
-
-	public void setOtherId(String otherId) {
-		_otherId = otherId;
-	}
-
 	private long _employeeId;
-	private long _contactDetailsId;
-	private long _jobId;
-	private long _shiftId;
-	private long _licenseId;
+	private long _locationId;
+	private long _assignedUserId;
+	private long _imageId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _firstName;
-	private String _lastName;
-	private String _middleName;
-	private Blob _photograph;
-	private int _gender;
-	private int _maritalStatus;
-	private String _nationality;
-	private Date _dateOfBirth;
-	private String _otherId;
 }

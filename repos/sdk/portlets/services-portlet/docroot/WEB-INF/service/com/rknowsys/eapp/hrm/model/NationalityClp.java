@@ -81,7 +81,7 @@ public class NationalityClp extends BaseModelImpl<Nationality>
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("Name", getName());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -124,10 +124,10 @@ public class NationalityClp extends BaseModelImpl<Nationality>
 			setModifiedDate(modifiedDate);
 		}
 
-		String Name = (String)attributes.get("Name");
+		String name = (String)attributes.get("name");
 
-		if (Name != null) {
-			setName(Name);
+		if (name != null) {
+			setName(name);
 		}
 	}
 
@@ -281,12 +281,12 @@ public class NationalityClp extends BaseModelImpl<Nationality>
 
 	@Override
 	public String getName() {
-		return _Name;
+		return _name;
 	}
 
 	@Override
-	public void setName(String Name) {
-		_Name = Name;
+	public void setName(String name) {
+		_name = name;
 
 		if (_nationalityRemoteModel != null) {
 			try {
@@ -294,7 +294,7 @@ public class NationalityClp extends BaseModelImpl<Nationality>
 
 				Method method = clazz.getMethod("setName", String.class);
 
-				method.invoke(_nationalityRemoteModel, Name);
+				method.invoke(_nationalityRemoteModel, name);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -440,7 +440,7 @@ public class NationalityClp extends BaseModelImpl<Nationality>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", Name=");
+		sb.append(", name=");
 		sb.append(getName());
 		sb.append("}");
 
@@ -480,7 +480,7 @@ public class NationalityClp extends BaseModelImpl<Nationality>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>Name</column-name><column-value><![CDATA[");
+			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 
@@ -496,6 +496,6 @@ public class NationalityClp extends BaseModelImpl<Nationality>
 	private String _userUuid;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _Name;
+	private String _name;
 	private BaseModel<?> _nationalityRemoteModel;
 }

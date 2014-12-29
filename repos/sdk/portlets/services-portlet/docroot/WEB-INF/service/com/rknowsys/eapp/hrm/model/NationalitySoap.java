@@ -138,11 +138,11 @@ public class NationalitySoap implements Serializable {
 	}
 
 	public String getName() {
-		return _Name;
+		return _name;
 	}
 
-	public void setName(String Name) {
-		_Name = Name;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	private long _nationalityId;
@@ -151,5 +151,5 @@ public class NationalitySoap implements Serializable {
 	private long _userId;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _Name;
+	private String _name;
 }

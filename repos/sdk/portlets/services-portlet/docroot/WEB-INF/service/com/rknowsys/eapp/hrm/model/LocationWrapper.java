@@ -50,6 +50,7 @@ public class LocationWrapper implements Location, ModelWrapper<Location> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("locationId", getLocationId());
+		attributes.put("nationalityId", getNationalityId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("createDate", getCreateDate());
@@ -64,7 +65,6 @@ public class LocationWrapper implements Location, ModelWrapper<Location> {
 		attributes.put("phone", getPhone());
 		attributes.put("fax", getFax());
 		attributes.put("notes", getNotes());
-		attributes.put("jobId", getJobId());
 
 		return attributes;
 	}
@@ -75,6 +75,12 @@ public class LocationWrapper implements Location, ModelWrapper<Location> {
 
 		if (locationId != null) {
 			setLocationId(locationId);
+		}
+
+		Long nationalityId = (Long)attributes.get("nationalityId");
+
+		if (nationalityId != null) {
+			setNationalityId(nationalityId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -160,12 +166,6 @@ public class LocationWrapper implements Location, ModelWrapper<Location> {
 		if (notes != null) {
 			setNotes(notes);
 		}
-
-		Long jobId = (Long)attributes.get("jobId");
-
-		if (jobId != null) {
-			setJobId(jobId);
-		}
 	}
 
 	/**
@@ -206,6 +206,26 @@ public class LocationWrapper implements Location, ModelWrapper<Location> {
 	@Override
 	public void setLocationId(long locationId) {
 		_location.setLocationId(locationId);
+	}
+
+	/**
+	* Returns the nationality ID of this location.
+	*
+	* @return the nationality ID of this location
+	*/
+	@Override
+	public long getNationalityId() {
+		return _location.getNationalityId();
+	}
+
+	/**
+	* Sets the nationality ID of this location.
+	*
+	* @param nationalityId the nationality ID of this location
+	*/
+	@Override
+	public void setNationalityId(long nationalityId) {
+		_location.setNationalityId(nationalityId);
 	}
 
 	/**
@@ -508,26 +528,6 @@ public class LocationWrapper implements Location, ModelWrapper<Location> {
 	@Override
 	public void setNotes(java.lang.String notes) {
 		_location.setNotes(notes);
-	}
-
-	/**
-	* Returns the job ID of this location.
-	*
-	* @return the job ID of this location
-	*/
-	@Override
-	public long getJobId() {
-		return _location.getJobId();
-	}
-
-	/**
-	* Sets the job ID of this location.
-	*
-	* @param jobId the job ID of this location
-	*/
-	@Override
-	public void setJobId(long jobId) {
-		_location.setJobId(jobId);
 	}
 
 	@Override

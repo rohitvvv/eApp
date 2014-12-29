@@ -14,7 +14,6 @@
 
 package com.rknowsys.eapp.hrm.model;
 
-import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -23,8 +22,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
-
-import java.sql.Blob;
 
 import java.util.Date;
 
@@ -77,60 +74,61 @@ public interface EmployeeModel extends BaseModel<Employee> {
 	public void setEmployeeId(long employeeId);
 
 	/**
-	 * Returns the contact details ID of this Employee.
+	 * Returns the location ID of this Employee.
 	 *
-	 * @return the contact details ID of this Employee
+	 * @return the location ID of this Employee
 	 */
-	public long getContactDetailsId();
+	public long getLocationId();
 
 	/**
-	 * Sets the contact details ID of this Employee.
+	 * Sets the location ID of this Employee.
 	 *
-	 * @param contactDetailsId the contact details ID of this Employee
+	 * @param locationId the location ID of this Employee
 	 */
-	public void setContactDetailsId(long contactDetailsId);
+	public void setLocationId(long locationId);
 
 	/**
-	 * Returns the job ID of this Employee.
+	 * Returns the assigned user ID of this Employee.
 	 *
-	 * @return the job ID of this Employee
+	 * @return the assigned user ID of this Employee
 	 */
-	public long getJobId();
+	public long getAssignedUserId();
 
 	/**
-	 * Sets the job ID of this Employee.
+	 * Sets the assigned user ID of this Employee.
 	 *
-	 * @param jobId the job ID of this Employee
+	 * @param assignedUserId the assigned user ID of this Employee
 	 */
-	public void setJobId(long jobId);
+	public void setAssignedUserId(long assignedUserId);
 
 	/**
-	 * Returns the shift ID of this Employee.
+	 * Returns the assigned user uuid of this Employee.
 	 *
-	 * @return the shift ID of this Employee
+	 * @return the assigned user uuid of this Employee
+	 * @throws SystemException if a system exception occurred
 	 */
-	public long getShiftId();
+	public String getAssignedUserUuid() throws SystemException;
 
 	/**
-	 * Sets the shift ID of this Employee.
+	 * Sets the assigned user uuid of this Employee.
 	 *
-	 * @param shiftId the shift ID of this Employee
+	 * @param assignedUserUuid the assigned user uuid of this Employee
 	 */
-	public void setShiftId(long shiftId);
+	public void setAssignedUserUuid(String assignedUserUuid);
 
 	/**
-	 * Returns the license ID of this Employee.
+	 * Returns the image ID of this Employee.
 	 *
-	 * @return the license ID of this Employee
+	 * @return the image ID of this Employee
 	 */
-	public long getLicenseId();
+	public long getImageId();
 
 	/**
-	 * Sets the license ID of this Employee.
+	 * Sets the image ID of this Employee.
 	 *
-	 * @param licenseId the license ID of this Employee
+	 * @param imageId the image ID of this Employee
 	 */
-	public void setLicenseId(long licenseId);
+	public void setImageId(long imageId);
 
 	/**
 	 * Returns the group ID of this Employee.
@@ -216,137 +214,6 @@ public interface EmployeeModel extends BaseModel<Employee> {
 	 * @param modifiedDate the modified date of this Employee
 	 */
 	public void setModifiedDate(Date modifiedDate);
-
-	/**
-	 * Returns the first name of this Employee.
-	 *
-	 * @return the first name of this Employee
-	 */
-	@AutoEscape
-	public String getFirstName();
-
-	/**
-	 * Sets the first name of this Employee.
-	 *
-	 * @param firstName the first name of this Employee
-	 */
-	public void setFirstName(String firstName);
-
-	/**
-	 * Returns the last name of this Employee.
-	 *
-	 * @return the last name of this Employee
-	 */
-	@AutoEscape
-	public String getLastName();
-
-	/**
-	 * Sets the last name of this Employee.
-	 *
-	 * @param lastName the last name of this Employee
-	 */
-	public void setLastName(String lastName);
-
-	/**
-	 * Returns the middle name of this Employee.
-	 *
-	 * @return the middle name of this Employee
-	 */
-	@AutoEscape
-	public String getMiddleName();
-
-	/**
-	 * Sets the middle name of this Employee.
-	 *
-	 * @param middleName the middle name of this Employee
-	 */
-	public void setMiddleName(String middleName);
-
-	/**
-	 * Returns the photograph of this Employee.
-	 *
-	 * @return the photograph of this Employee
-	 */
-	public Blob getPhotograph();
-
-	/**
-	 * Sets the photograph of this Employee.
-	 *
-	 * @param photograph the photograph of this Employee
-	 */
-	public void setPhotograph(Blob photograph);
-
-	/**
-	 * Returns the gender of this Employee.
-	 *
-	 * @return the gender of this Employee
-	 */
-	public int getGender();
-
-	/**
-	 * Sets the gender of this Employee.
-	 *
-	 * @param gender the gender of this Employee
-	 */
-	public void setGender(int gender);
-
-	/**
-	 * Returns the marital status of this Employee.
-	 *
-	 * @return the marital status of this Employee
-	 */
-	public int getMaritalStatus();
-
-	/**
-	 * Sets the marital status of this Employee.
-	 *
-	 * @param maritalStatus the marital status of this Employee
-	 */
-	public void setMaritalStatus(int maritalStatus);
-
-	/**
-	 * Returns the nationality of this Employee.
-	 *
-	 * @return the nationality of this Employee
-	 */
-	@AutoEscape
-	public String getNationality();
-
-	/**
-	 * Sets the nationality of this Employee.
-	 *
-	 * @param nationality the nationality of this Employee
-	 */
-	public void setNationality(String nationality);
-
-	/**
-	 * Returns the date of birth of this Employee.
-	 *
-	 * @return the date of birth of this Employee
-	 */
-	public Date getDateOfBirth();
-
-	/**
-	 * Sets the date of birth of this Employee.
-	 *
-	 * @param dateOfBirth the date of birth of this Employee
-	 */
-	public void setDateOfBirth(Date dateOfBirth);
-
-	/**
-	 * Returns the other ID of this Employee.
-	 *
-	 * @return the other ID of this Employee
-	 */
-	@AutoEscape
-	public String getOtherId();
-
-	/**
-	 * Sets the other ID of this Employee.
-	 *
-	 * @param otherId the other ID of this Employee
-	 */
-	public void setOtherId(String otherId);
 
 	@Override
 	public boolean isNew();

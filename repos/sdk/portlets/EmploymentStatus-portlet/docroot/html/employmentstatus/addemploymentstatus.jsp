@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.servlet.SessionMessages"%>
 <%@ include file="/html/employmentstatus/init.jsp"%>
 <html>
 <head>
@@ -10,11 +11,8 @@
 	<portlet:param name="mvcPath" value="/html/employmentstatus/addemploymentstatus.jsp" />
 </portlet:renderURL>
 <style type="text/css">
-.table-first-header {
-	width: 10%;
-}
-.table-last-header {
-	width: 15%;
+em{
+ color: red;
 }
 </style>
 <aui:script>
@@ -26,7 +24,7 @@ AUI().use(
       'click',
       function() {
      var idArray = [];
-      A.all('input[type=checkbox]:checked').each(function(object) {
+     A.all('input[name=<portlet:namespace/>rowIds]:checked').each(function(object) {
       idArray.push(object.get("value"));
     
         });
@@ -105,30 +103,32 @@ AUI().use(
 </head>
 
 <body>
-	<div id="employmentstatusadddelete" class="span12">
-		<a href="#" id="add">Add</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" id="delete">Delete</a>
-
-	</div>
-	<div  id="addEmploymentstatusForm">
-	<aui:form name="myForm" action="<%=saveemploymentstatus.toString()%>">
-		<aui:input name="employmentstatusId" type="hidden" id="employmentstatusId" />
-		<div class="span12">
-			<div class="span2">
-				<label>Employment Status</label>
-		</div>
-		<div class="span3">		
-		 <input name="<portlet:namespace/>employmentstatus" id="employmentstatus" type="text" required = "required">
-			</div>
-		</div>
-		
-		<aui:button type="submit" value="Submit" />
-		<aui:button  type="reset" value="Cancel" id ="cancel"/>
-		
-	</aui:form>
-	</div>
+<% if(SessionMessages.contains(renderRequest.getPortletSession(),"employmentStatus-empty-error")){%>
+<liferay-ui:message key="Please Enter EmploymentStatus"/>
+<%} 
+ if(SessionMessages.contains(renderRequest.getPortletSession(),"employmentStatus-duplicate-error")){
+%>
+<liferay-ui:message key="EmploymentStatus already Exits"/>
+<%} 
+%>
+ <br/><br/>
 	
-	 <div><label style="color: white" >.</label></div>
+		<div  id="addEmploymentstatusForm">
+			<aui:form name="myForm" action="<%=saveemploymentstatus.toString()%>">
+				<aui:input name="employmentstatusId" type="hidden" id="employmentstatusId" />
+				<div class="span12">
+				 <div class="span2">	<label>Employment Status:<em>*</em> </label></div>
+				<div class="span3">	 <aui:input name="employmentstatus" label="" id="employmentstatus" type="text"/></div>
+			 </div>
+				 <aui:button type="submit" value="Submit"/>
+				 <aui:button  type="reset" value="Cancel" id ="cancel"/>
+				 <input type="button" value="Delete" class="btn" id="delete">
+				
+			</aui:form>
+		</div>
 	
+	
+<div><em>*</em> Required Field</div>
 </body>
 
 <%
@@ -150,7 +150,6 @@ portalPrefs.setValue("NAME_SPACE", "sort-by-type", sortByCol);
  
 } else { 
  
-	
 	sortByType = portalPrefs.getValue("NAME_SPACE", "sort-by-type ", "asc");   
 }
 
@@ -166,11 +165,12 @@ System.out.println("sortByType == " +sortByType);
 <liferay-ui:search-container orderByCol="<%=sortByCol %>"
 	orderByType="<%=sortByType %>"
 	rowChecker="<%= new RowChecker(renderResponse) %>" delta="5"
-	emptyResultsMessage="No records is available for Employment Statuses."
+	emptyResultsMessage="No records is available for Employment Status."
 	deltaConfigurable="true" iteratorURL="<%=iteratorURL%>">
 	<liferay-ui:search-container-results>
 
-		<%
+		<% 
+		 System.out.println("addemployee jsp =========");
             List<EmploymentStatus> employmentstatusList = EmploymentStatusLocalServiceUtil.getEmploymentStatuses(searchContainer.getStart(), searchContainer.getEnd());
             System.out.println("list size == " +employmentstatusList.size());
             OrderByComparator orderByComparator = CustomComparatorUtil.getEmploymentStatusrOrderByComparator(sortByCol, sortByType);         
@@ -190,7 +190,7 @@ System.out.println("sortByType == " +sortByType);
 
 	</liferay-ui:search-container-results>
 	<liferay-ui:search-container-row className="EmploymentStatus"
-		keyProperty="id" modelVar="employmentstatus" rowVar="curRow"
+		keyProperty="employmentStatusId" modelVar="EmploymentStatus" rowVar="curRow"
 		escapedModel="<%= true %>">
 		<liferay-ui:search-container-column-text orderable="<%=true %>"
 			name="Employment Status" property="employmentstatus"

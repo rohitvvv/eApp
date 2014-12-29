@@ -1,10 +1,19 @@
+<%@page import="com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil"%>
+<%@page import="com.liferay.portal.kernel.util.PortalClassLoaderUtil"%>
+<%@page import="com.rknowsys.eapp.hrm.service.EmpJobLocalServiceUtil"%>
+<%@page import="com.liferay.portal.kernel.portlet.PortletClassLoaderUtil"%>
+<%@page import="com.rknowsys.eapp.hrm.model.EmpJob"%>
+<%@page import="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil"%>
+<%@page import="com.liferay.portal.kernel.dao.orm.DynamicQuery"%>
+<%@page import="com.rknowsys.eapp.hrm.service.EmpPersonalDetailsLocalServiceUtil"%>
+<%@page import="com.rknowsys.eapp.hrm.model.EmpPersonalDetails"%>
 <%@ include file="/html/workshift/init.jsp"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Work Shifts</title>
-<portlet:actionURL var="saveworkshift" name="saveWorkshift">
-</portlet:actionURL>
+
+<portlet:actionURL var="saveworkshift" name="saveWorkshift"/>
 <portlet:resourceURL var="deleteworkshift" id="deleteWorkshift" />
 <portlet:renderURL var="listview">
 	<portlet:param name="mvcPath" value="/html/workshift/addworkshift.jsp" />
@@ -17,47 +26,18 @@
 .table-last-header {
 	width: 15%;
 }
+.aui input[type="text"],.aui select{
+border-radius: 4px;
+}
+.aui label {
+color: #555;
+font-size: 14px;
+font-weight: 200;
+font-family: sans-serif;
+font: small-caption;
+}
 </style>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>
-var arr = new Array;
-$(document).ready(function() {
-    $('#<portlet:namespace/>btnRight').click(function(e) {
-        var selectedOpts = $('#<portlet:namespace/>lstBox1 option:selected');
-        if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
-            e.preventDefault();
-        }
 
-        $('##<portlet:namespace/>lstBox2').append($(selectedOpts).clone());
-        $(selectedOpts).remove();
-        e.preventDefault();
-    });
-
-    $('#btnLeft').click(function(e) {
-        var selectedOpts = $('#lstBox2 option:selected');
-        if (selectedOpts.length == 0) {
-            alert("Nothing to move.");
-            e.preventDefault();
-        }
-
-        $('#lstBox1').append($(selectedOpts).clone());
-        $(selectedOpts).remove();
-        e.preventDefault();
-    });
-    
-    $('#<portlet:namespace/>save').click(function(element) {
-        var selectedOpts = $('#lstBox2 option:selected');
-        if (selectedOpts.length != 0) {
-        	     $("#lstBox2 option").each  ( function() {
-        	        arr.push ( $(this).val() );
-        	     });
-
-        	 alert ( arr.join(',' ) );
-        }
-    });
-});
-</script>
 <aui:script>
 AUI().use(
   'aui-node',
@@ -66,6 +46,7 @@ AUI().use(
     node.on(
       'click',
       function() {
+     
      var idArray = [];
       A.all('input[type=checkbox]:checked').each(function(object) {
       idArray.push(object.get("value"));
@@ -74,17 +55,17 @@ AUI().use(
        if(idArray==""){
 			  alert("Please select records!");
 		  }else{
-			  var d = confirm("Are you sure you want to delete the selected Work Shift?");
+			  var d = confirm("Are you sure you want to delete the selected workshift ?");
 		  if(d){
 		   var url = '<%=deleteworkshift%>';
           A.io.request(url,
-         {
+         {																																																			
           data: {  
-                <portlet:namespace />workshiftIds: idArray,  
+                <portlet:namespace />workshiftIds: idArray,   
                  },
           on: {
                success: function() { 
-                   alert('Records deleted successfully.');
+                   alert('Deleted successfully.');
                    window.location='<%=listview%>';
               },
                failure: function() {
@@ -105,38 +86,46 @@ AUI().use(
     );
   }
 );
-</aui:script>
-<aui:script>
+
+
+
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#add');
-    node.on(
+    
+    var add = A.one('#btn-add');
+ add.on(
       'click',
       function() {
-         A.one('#workshiftadddelete').hide();
-         A.one('#addworkshiftForm').show();
-                     
+      AUI().ready('aui-node',function(A) {
+       var nodeObject = A.all('#select-to');
+        A.all('#select-from option:selected').each(function() {
+        A.one('#select-to').append('<option selected="selected" value="'+this.val()+'">'+this.text()+'</option>');
+        this.remove();
+       
+		});
+      });
       }
     );
   }
 );
 
- AUI().ready('event', 'node', function(A){
-
-  A.one('#addworkshiftForm').hide();
- });
-
 AUI().use(
   'aui-node',
   function(A) {
-    var node = A.one('#cancel');
-    node.on(
+    
+    var add = A.one('#btn-remove');
+ add.on(
       'click',
       function() {
-         A.one('#workshiftadddelete').show();
-         A.one('#addworkshiftForm').hide();
-                     
+      AUI().ready('aui-node',function(A) {
+       var nodeObject = A.all('#select-from');
+        A.all('#select-to option:selected').each(function() {
+        A.one('#select-from').append('<option value="'+this.val()+'">'+this.text()+'</option>');
+        this.remove();
+       
+		});
+      });
       }
     );
   }
@@ -151,12 +140,12 @@ YUI().use(
       {
         trigger: '#fromWorkHours',
         popover: {
-          zIndex: 1
+          zIndex: 2
         },
         mask:'%H:%M',
         on: {
           selectionChange: function(event) {
-            document.<portlet:namespace />addworkshiftForm_1.<portlet:namespace />duration.value = event.newSelection;
+            document.<portlet:namespace />workshiftForm.<portlet:namespace />duration.value = event.newSelection;
           }
         }
       }
@@ -170,82 +159,91 @@ YUI().use(
         },
         on: {
           selectionChange: function(event) {
-            document.<portlet:namespace />addworkshiftForm_1.<portlet:namespace />duration.value = event.newSelection;
+            document.<portlet:namespace />workshiftForm.<portlet:namespace />duration.value = event.newSelection;
           }
         }
       }
     );
   }
 );
+
 </aui:script>
 </head>
 
 <body>
-	<div id="workshiftadddelete" class="span12">
-		<a href="#" id="add">Add</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"
-			id="delete">Delete</a>
-
-	</div>
-	<portlet:actionURL name="addLocations" var="addLocation"></portlet:actionURL>
-	<div id="addworkshiftForm">
-	<aui:form name = "addworkshiftForm_1" action="<%=saveworkshift%>" method="post">
+	 
+<div id="addworkshiftForm" >
+	<aui:form 	 name = "workshiftForm" action="<%=saveworkshift %>">
+	
+	<div class="row-fluid">
 		<aui:input name="shiftId" type="hidden" id="shiftId" />
-		<aui:fieldset label="Add Work Shift">
-			<aui:input name="workshiftName"
-				id="workshiftName" type="text" label="Shift Name">
+		<aui:input name="workshiftName" showRequiredLabel="false"
+				type="text" label="Shift Name">
 				<aui:validator name="required" />
 			</aui:input>
+	</div>
+	<div class="row-fluid">
+	 <div class="span4">
 			<label>From</label>
 			<input name="<portlet:namespace />fromWorkHours"
 				id="fromWorkHours" type="text" required="required"
-				placeholder="hh:mm" value="9:00" />
+				placeholder="hh:mm" value="00:00"  />
+			</div>
+			<div class="span4">
 				<label>To</label>
 			<input name="<portlet:namespace />toWorkHours" id="toWorkHours"
-				type="text" required="required" placeholder="hh:mm" value="17:00"
+				type="text" required="required" placeholder="hh:mm" value="00:00"
 				/>
+		</div><div class="span4"></div>
+		
+</div>
+  <div class="row-fluid">
 
-	<table style='width:370px;'>
-    <tr>
-				<td style='width: 160px;'><b>Group 1:</b><br /> <select
-					multiple="multiple" id='lstBox1'>
-						<%
-							List<Employee> allEmployees = EmployeeLocalServiceUtil
-									.getEmployees(0,
-											EmployeeLocalServiceUtil.getEmployeesCount());
-							for (Iterator<Employee> iter = allEmployees.iterator(); iter
-									.hasNext();) {
-								Employee employee = iter.next();
-						%>
-						<option value="<%=employee.getEmployeeId()%>"><%=employee.getFirstName()%></option>
-						<%
-							}
-						%>
-				</select></td>
-				<td style='width:50px;text-align:center;vertical-align:middle;'>
-        <input type='button' id='btnRight' value ='  >  '/>
-        <br/><input type='button' id='btnLeft' value ='  <  '/>
-    </td>
-    <td style='width:160px;'>
-        <b>Group 2: </b><br/>
-        <select multiple="multiple" id='lstBox2'> 
-        </select>
-    </td>
-</tr>
-</table>
-			<aui:button-row>
-				<aui:button name="save" type="submit" />
-				<aui:button name="cancel" type="reset" />
-			</aui:button-row>
-		</aui:fieldset>
+				<table>
+					<tr>
+						<td><b> Available Employees<br /></b>
+ <%
+ 
+ 		List<EmpPersonalDetails> emplist = EmpPersonalDetailsLocalServiceUtil.getEmployeeDetailsByShiftId(Long.parseLong("0"));
+ 		System.out.println("List == "+emplist.size());
+ %> <select name="<portlet:namespace />selectfrom" id="select-from" multiple="multiple">
+								<%
+									for (int i = 0; i < emplist.size(); i++) {
+								%>
+
+								<Option value="<%=emplist.get(i).getEmployeeId()%>"><%=emplist.get(i).getFirstName()+" "+emplist.get(i).getLastName()%></Option>
+								<%
+									}
+								%>
+						</select></td>
+						<td align="center" height="183px" width="175px"><div id="btn-add"><a href="#">Add</a></div>
+							<br />
+						<div id="btn-remove"><a href="#">Remove</a></div></td>
+						<td><b>Assigned Employees<br /></b> <select 
+							name="<portlet:namespace />selectto" id="select-to"
+							multiple="multiple">
+
+
+						</select></td>
+					</tr>
+
+				</table>
+						
+			</div>
+				
+			   <aui:button type="submit" name="submit" value="Submit" id="submit"></aui:button>
+			   <aui:button type="reset" value="reset"></aui:button>
+			   <input type="button" class="btn" value="Delete" id="delete">
+			
+		
 	</aui:form>
 	</div>
-	<%
-	    
-	 %>
-
 	<div>
 		<label style="color: white">.</label>
 	</div>
+	
+	
+</body>
 
 <%
 	PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -279,8 +277,8 @@ YUI().use(
 <%!com.liferay.portal.kernel.dao.search.SearchContainer<Workshift> searchContainer;%>
 <div>
 	<liferay-ui:search-container orderByCol="<%=sortByCol%>"
-		orderByType="<%=sortByType%>"
-		rowChecker="<%=new RowChecker(renderResponse)%>" delta="5"
+		orderByType="<%=sortByType%>" rowChecker="<%= new RowChecker(renderResponse) %>"
+		delta="5"
 		emptyResultsMessage="No records is available for Work Shifts."
 		deltaConfigurable="true" iteratorURL="<%=iteratorURL%>">
 		<liferay-ui:search-container-results>
@@ -306,13 +304,15 @@ YUI().use(
 						System.out.println("total == " + total);
 						pageContext.setAttribute("results", results);
 						pageContext.setAttribute("total", total);
+				System.out.println("searchContainer.getStart() =" + searchContainer.getStart());
+					System.out.println(	"searchContainer.getEnd() = " + searchContainer.getEnd());
 			%>
 
 		</liferay-ui:search-container-results>
 		<liferay-ui:search-container-row className="Workshift"
 			keyProperty="shiftId" modelVar="workshift" rowVar="curRow"
 			escapedModel="<%=true%>">
-			<% WorkshiftExtended workshiftExt = new WorkshiftExtended(workshift); %>
+			<% WorkshiftBean workshiftExt = new WorkshiftBean(workshift); %>
 			<liferay-ui:search-container-column-text orderable="<%=true%>"
 				name="Shift Name" property="workshiftName"
 				orderableProperty="workshiftName" />
@@ -331,5 +331,4 @@ YUI().use(
 	</liferay-ui:search-container>
 </div>
 
-</body>
 </html>

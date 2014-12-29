@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.servlet.SessionMessages"%>
 <%@page import="com.rknowsys.eapp.hrm.model.EmploymentStatus"%>
 <%@page import="com.liferay.portal.kernel.util.WebKeys"%>
 <%@page import="com.liferay.portal.kernel.dao.search.ResultRow"%>
@@ -13,12 +14,9 @@
 <portlet:renderURL var="listview">
 	<portlet:param name="mvcPath" value="/html/employmentstatus/addemploymentstatus.jsp" />
 </portlet:renderURL>
-<style type="text/css">	
-.table-first-header{
-width: 10%;
-}
-.table-last-header{
-width: 15%;
+<style type="text/css">
+em{
+ color: red;
 }
 </style>
 <aui:script>
@@ -30,7 +28,7 @@ AUI().use(
       'click',
       function() {
      var idArray = [];
-      A.all('input[type=checkbox]:checked').each(function(object) {
+     A.all('input[name=<portlet:namespace/>rowIds]:checked').each(function(object) {
       idArray.push(object.get("value"));
     
         });
@@ -111,26 +109,28 @@ AUI().use(
 
 </head>
 <body>
-<jsp:useBean id="editemploymentstatus" type="com.rknowsys.eapp.hrm.model.EmploymentStatus" scope="request" />
-<div id="editjobadddelete" class="span12">
-		<a href="#" id="add">Add</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"
-			id="delete">Delete</a>
-	</div>
-	<div id="editEmploymentStatusForm">
-  <aui:form name="myForm" action="<%=saveemploymentstatus.toString()%>">
-		<aui:input name="employmentstatusId" type="hidden" id="employmentstatusId"  value="<%=editemploymentstatus.getId()%>"/>
-		<div class="span12">
-				<div class="span2">
-						<label>Employment Status</label>
-			 </div>
-			 <div class="span3">
-			 <input name="<portlet:namespace/>employmentstatus" id="editemploymentstatus" class="employmentstatus" type="text" required = "required" value="<%=editemploymentstatus.getEmploymentstatus() %>">
-						</div>
-					</div>
-	<aui:button type="submit" value="Submit"/> <aui:button  type="reset" value="Cancel" id ="editcancel"></aui:button>
-	</aui:form>
-	</div>
-	 <div><label style="color: white" >.</label></div>
+<% if(SessionMessages.contains(renderRequest.getPortletSession(),"employmentStatus-empty-error")){%>
+<liferay-ui:message key="Please Enter EmploymentStatus"/>
+<%} 
+  EmploymentStatus editemploymentstatus =(EmploymentStatus)portletSession.getAttribute("editemploymentstatus");
+%>
+<br/><br/>
+
+		<div id="editEmploymentStatusForm">
+	    <aui:form name="myForm" action="<%=saveemploymentstatus.toString()%>">
+	  		<aui:input name="employmentstatusId" type="hidden" id="employmentstatusId"  value="<%=editemploymentstatus.getEmploymentStatusId()%>"/>
+	  		<div class="span12">
+			<div class="span2">	<label>Employment Status:<em>*</em> </label></div>
+			<div class="span3">	<aui:input label="" name="employmentstatus" id="editemploymentstatus" class="employmentstatus" type="text" value="<%=editemploymentstatus.getEmploymentstatus() %>"/></div>
+			</div>
+				<aui:button type="submit" value="Submit"/>
+				<aui:button  type="reset" id ="editcancel" value="Cancel"/>
+	  		    <input type="button" value="Delete" class="btn" id="delete">
+	  		
+	  	</aui:form>
+		</div>
+
+<div><em>*</em> Required Field</div>
 </body>
 <%
 PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -178,7 +178,7 @@ System.out.println("sortByType == " +sortByType);
                pageContext.setAttribute("total", total);
  %>
 	</liferay-ui:search-container-results>
-	<liferay-ui:search-container-row className="EmploymentStatus" keyProperty="id" modelVar="EmploymentStatus"  rowVar="curRow" escapedModel="<%= true %>">
+	<liferay-ui:search-container-row className="EmploymentStatus" keyProperty="employmentStatusId" modelVar="EmploymentStatus"  rowVar="curRow" escapedModel="<%= true %>">
 	     <liferay-ui:search-container-column-text orderable="<%=true %>" name="Employment Status" property="employmentstatus" orderableProperty="employmentstatus"/>
 		 <liferay-ui:search-container-column-jsp name="Edit"  path="/html/employmentstatus/edit.jsp"/>
 		 
